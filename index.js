@@ -1,13 +1,13 @@
 const kafka = require("kafka-node");
 
 /**
- * @typedef {Object} TLAKafkaProducerConfig
+ * @typedef {Object} SimpleKafkaProducerConfig
  * @property {string} brokers A comma-delimited string of Kafka broker endpoints.
  * @property {string} saslUser SASL user for the cluster.
  * @property {string} saslPass SASL password for the cluster.
  */
 /** Configuration settings for our client. 
- * @type {TLAKafkaProducerConfig}
+ * @type {SimpleKafkaProducerConfig}
 */
 var config = undefined;
 
@@ -107,8 +107,7 @@ function initProducer() {
 }
 
 /**
- * Produce a message to a given Kafka topic.  The topic should already exist, as our
- * TLA cluster will permit topic creation.
+ * Produce a message to a given Kafka topic.
  * @param {string} topic Topic to target.
  * @param {any} message Message to produce.
  */
@@ -229,7 +228,7 @@ module.exports = {
 
     /**
      * Configure the producer.  This is required before you can actually do anything.
-     * @param {TLAKafkaProducerConfig} configObj 
+     * @param {SimpleKafkaProducerConfig} configObj 
      */
     configure: function(configObj) {
         config = configObj;
