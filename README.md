@@ -4,7 +4,7 @@ This is a Node module to streamline Kafka integration for Node services.  It's i
 This is essentially a wrapper for the **[kafka-node](https://www.npmjs.com/package/kafka-node)** library.
 
 ### Installation
-While this isn't on NPM directly, you can install it through this repo:
+You can install this through NPM:
 ```
 npm install simple-kafka-producer --save
 ```
