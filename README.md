@@ -13,7 +13,7 @@ npm install simple-kafka-producer --save
 Setup for a producer is pretty minimal.  This adapter supports plaintext SASL as an authorization mechanism, so you'll need to provide those credentials if that's how your cluster is configured.
 
 ```
-const kafkaProducer = require("./index");
+const kafkaProducer = require("simple-kafka-producer");
 
 // Set everything up
 kafkaProducer.configure({
