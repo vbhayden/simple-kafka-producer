@@ -110,12 +110,13 @@ function initProducer() {
  * Produce a message to a given Kafka topic.
  * @param {string} topic Topic to target.
  * @param {string} message Message to produce.
+ * @param {number} partition Partition to use.
  */
-function produceMessage(topic, message) {
+function produceMessage(topic, message, partition = null) {
     
     let payload = [{
         topic: topic,
-        partition: 0,
+        partition: partition,
         messages: [message]
     }]
 
@@ -143,7 +144,7 @@ function produceMessage(topic, message) {
                 }
 
                 // Add this message to our backlog as it didn't get through
-                addToBacklog(topic, message)
+                addToBacklog(topic, message, partition)
                 
                 // Only trigger a reconnect if we didn't have anything in-flight
                 if (producer.flying == 0)
@@ -164,9 +165,9 @@ function produceMessage(topic, message) {
 }
 
 // Add to our backlog
-function addToBacklog(topic, message) {
+function addToBacklog(topic, message, partition) {
 
-    backlog.push({topic: topic, message: message})
+    backlog.push({topic: topic, message: message, partition: partition})
     console.log(`[Kafka] Backlogging message for ${topic} (Total: ${backlog.length}): Message: ${message}`)
 }
 
@@ -208,7 +209,7 @@ function dumpCache(cache, batchSize) {
         // Just go through and send each message
         for (let k=lower; k<upper; k++) {
             let msg = cache[k]
-            produceMessage(msg.topic, msg.message);
+            produceMessage(msg.topic, msg.message, msg.partition);
         }
     }, 500);
     console.log(`[Kafka] ... backlog emptied.`)
