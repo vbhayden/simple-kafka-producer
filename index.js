@@ -109,7 +109,7 @@ function initProducer() {
 /**
  * Produce a message to a given Kafka topic.
  * @param {string} topic Topic to target.
- * @param {string} message Message to produce.
+ * @param {(object|string)} message Message to produce.
  * @param {number} partition Partition to use.
  */
 function produceMessage(topic, message, partition = null) {
@@ -117,7 +117,7 @@ function produceMessage(topic, message, partition = null) {
     let payload = [{
         topic: topic,
         partition: partition,
-        messages: [message]
+        messages: [typeof message == "object" ? JSON.stringify(message) : message]
     }]
 
     // Check if we don't have a producer atm or if we started the failure process
