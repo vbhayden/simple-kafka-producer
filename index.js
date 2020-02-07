@@ -112,7 +112,7 @@ function initProducer() {
  * @param {(object|string)} message Message to produce.
  * @param {number} partition Partition to use.
  */
-function produceMessage(topic, message, partition = null) {
+function produceMessage(topic, message, partition = 0) {
     
     let payload = [{
         topic: topic,
