@@ -80,9 +80,12 @@ function onFailure(error) {
 // Initialize the consumer with its callbacks and whatnot.
 function initProducer() {
 
+    let saslProvided = (config.saslUser != undefined) && (config.saslPass != undefined);
+    let saslExcluded = (config.useSasl === false);
+
     client = new kafka.KafkaClient({
         kafkaHost: config.brokers,
-        sasl: (config.useSasl !== true ? undefined : {
+        sasl: (!saslProvided || saslExcluded ? undefined : {
             mechanism: "plain",
             username: config.saslUser,
             password: config.saslPass
